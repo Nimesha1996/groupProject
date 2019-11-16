@@ -1,0 +1,212 @@
+<div class="panel-header panel-header-sm">
+</div>
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Map Setting</h4>
+          <a (click)=addMap()><button type="button" class="btn btn-success" title="Add New Path"><i class="fas fa-plus"></i></button></a>
+        </div>
+        <div class="card-body">
+
+            <!-- Add new map -->
+            <div *ngIf="isAddMap"  class="card">
+                <div class="card-header">
+                    <button (click)=closeAddMap() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+                </div>
+                <div class="card-body">
+                  
+                  <div class="row">
+                      
+                      <div class="col-sm-8 col-lg-6">
+                          
+
+                          <div class="form-group">
+                              <label>Path Name:</label>
+                              <input type="text"  class="form-control"  name="pathName"  [(ngModel)]="newMap.pathName"/>
+                              <small *ngIf="errorPathName" class="text-danger">{{errorPathName}}</small>
+                          </div>
+                          <div class="form-group">
+                              <label>Origin:</label>
+                              <input type="text"  class="form-control"  name="origin"  [(ngModel)]="newMap.origin"/>
+                              <small *ngIf="errorOrigin" class="text-danger">{{errorOrigin}}</small>
+                          </div>
+                          <div class="form-group">
+                              <label>Destination:</label>
+                              <input type="text"  class="form-control"  name="destination"  [(ngModel)]="newMap.destination"/>
+                              <small *ngIf="errorDestination" class="text-danger">{{errorDestination}}</small>
+                          </div>
+
+                          <button (click)="googleMap(newMap,2)" type="button" class="btn btn-primary btn-round"><i class="fas fa-map-signs"></i> Map</button>
+                          <br>
+                          <button  (click)="saveConfirm(1)" type="button" class="btn btn-secondary btn-round">Save</button>
+
+                      </div>  
+                 
+                  <!-- Sub Path -->
+                  <div *ngIf="newMap.origin && newMap.destination" class="col-sm-4 col-lg-6">
+                    <br><br>
+                    <div class="card">
+                      <div class="card-header">
+                       
+                        Sub Town between {{newMap.origin}} and {{newMap.destination}}
+                        
+                      </div>
+                      <div class="card-body">
+
+                        <div class="form-group">
+                          <label>Town/Road:</label>
+                          <input type="text"  class="form-control"  name="newSubPath"  [(ngModel)]="newSubPath"/>
+                          <small *ngIf="errorSubPath" class="text-danger">{{errorSubPath}}</small>
+                        </div>
+                        
+                        <button (click)="addSubPath(1)" type="button" class="btn btn-primary btn-round">ADD</button>
+                        <button (click)="clearSubPath(1)" type="button" class="btn btn-danger btn-round">Clear</button> 
+                        <!-- Sub Path Table -->
+                          <div *ngFor="let subPath of newsubPaths">
+                            <small>{{subPath}}</small> <br>
+                          </div>
+                        <!-- Finish Sub Path Table -->
+                        
+                      </div>
+
+                    </div>
+                    <!-- Sub Path Finish -->
+
+                  </div>
+
+                </div>    
+                </div>
+            </div>
+            <!-- finish new  map add -->
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table">
+                  <thead class=" text-primary">
+                    <th>Path Name</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>SubTown</th>
+                    <th>Option</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let path of pathList">
+                      <td>{{path.pathName}}</td>
+                      <td>{{path.origin}}</td>
+                      <td>{{path.destination}}</td>
+                      <td>
+                          <div ngbDropdown class="dropdown" placement="bottom-left">
+                              <button (click)="getSubPathList(path.pathId)" class="btn btn-primary dropdown-toggle btn-sm" ngbDropdownToggle><i class="fas fa-list-ul"></i></button>
+                              <div ngbDropdownMenu *ngIf="isSubPathHas">
+                                <a *ngFor="let subPath of subPathList" class="dropdown-item">{{subPath}}</a>
+                              </div>
+                              <div ngbDropdownMenu *ngIf="!isSubPathHas">
+                                  <a class="dropdown-item">No Any SubTowns</a>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <a  (click)=isUpdate(path)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Path"></i></button></a>
+                          <a  (click)=delete(path)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Patht"></i></button></a>
+                          <a  (click)=googleMap(path,1)><button class="btn btn-info btn-sm"> <i class="fas fa-map" title="Google Map"></i></button></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            <!-- Finish Table -->
+
+            <!-- Update  -->
+            <div *ngIf="isUpdateMap" class="card">
+              <div class="card-header">
+                  <button (click)=closeUpdateMap() type="button" aria-hidden="true" class="close">
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                  <p class="card-title">Update {{updateMap.pathName}}</p>
+              </div>
+              <div class="card-body">
+
+                  <!-- Update map -->
+                
+                     
+                      
+                        
+                        <div class="row">
+                            
+                            <div class="col-sm-8 col-lg-6">
+                                
+
+                                <div class="form-group">
+                                    <label>Path Name:</label>
+                                    <input type="text"  class="form-control"  name="pathName"  [(ngModel)]="updateMap.pathName"/>
+                                    <small *ngIf="errorUpdatePathName" class="text-danger">{{errorUpdatePathName}}</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Origin:</label>
+                                    <input type="text"  class="form-control"  name="origin"  [(ngModel)]="updateMap.origin"/>
+                                    <small *ngIf="errorUpdateOrigin" class="text-danger">{{errorUpdateOrigin}}</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Destination:</label>
+                                    <input type="text"  class="form-control"  name="destination"  [(ngModel)]="updateMap.destination"/>
+                                    <small *ngIf="errorUpdateDestination" class="text-danger">{{errorUpdateDestination}}</small>
+                                </div>
+
+                                <button (click)="googleMap(updateMap,3)" type="button" class="btn btn-primary btn-round"><i class="fas fa-map-signs"></i> Map</button>
+                                <br>
+                                <button  (click)="saveConfirm(2)" type="button" class="btn btn-secondary btn-round">Update</button>
+
+                            </div>  
+                      
+                        <!-- Sub Path -->
+                        <div *ngIf="isUpdateSubpath" class="col-sm-4 col-lg-6">
+                          <br><br>
+                          <div class="card">
+                            <div class="card-header">
+                            
+                              Sub Town between {{updateMap.origin}} and {{updateMap.destination}}
+                              
+                            </div>
+                            <div class="card-body">
+
+                              <div class="form-group">
+                                <label>Town/Road:</label>
+                                <input type="text"  class="form-control"  name="updateSubPath"  [(ngModel)]="updateSubPath"/>
+                                <small *ngIf="errorUpdateSubPath" class="text-danger">{{errorUpdateSubPath}}</small>
+                              </div>
+                              
+                              <button (click)="addSubPath(2)" type="button" class="btn btn-primary btn-round">ADD</button>
+                              <button (click)="clearSubPath(2)" type="button" class="btn btn-danger btn-round">Clear</button> 
+                              <!-- Sub Path Table -->
+                                <div *ngFor="let subPath of updateSubPaths">
+                                  <small>{{subPath}}</small> <br>
+                                </div>
+                              <!-- Finish Sub Path Table -->
+                              
+                            </div>
+
+                          </div>
+                          <!-- Sub Path Finish -->
+
+                        </div>
+
+                      </div>    
+                      
+                  
+                  <!-- finish map  update -->
+
+              </div>
+            </div>
+            <!-- Update Finish -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

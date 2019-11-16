@@ -1,0 +1,57 @@
+<div class="panel-header panel-header-sm">
+</div>
+
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <p *ngIf="isAnyStudent" class="card-title">Date : <b>{{lessonDate}}</b> ({{lessonDay}})</p>
+      <p *ngIf="isAnyStudent" class="card-title">Time : <b>{{lessonTimeSlot}}</b></p>
+    </div>
+    <div class="card-body">
+
+       <!-- Message -->
+       <div *ngIf="warningMessage"class="alert alert-warning">
+          <button (click)="closeMsg(1)" type="button" aria-hidden="true" class="close">
+            <i class="now-ui-icons ui-1_simple-remove"></i>
+          </button>
+          <span>{{warningMessage}}</span>
+       </div>
+       <!-- Message Finish -->
+        <!--Error Message -->
+        <div *ngIf="errorMessage"class="alert alert-danger">
+          <button (click)="closeMsg(2)" type="button" aria-hidden="true" class="close">
+            <i class="now-ui-icons ui-1_simple-remove"></i>
+          </button>
+          <span>{{errorMessage}}</span>
+       </div>
+       <!--Error Message Finish -->
+
+        <!-- Table Start -->
+        <div *ngIf="isAnyStudent" class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead class=" text-primary thead-dark">
+              <th></th>
+              <th>Name</th>
+              <th>NIC</th>
+              <th>Complete</th>
+            </thead>
+            <tbody>
+               <tr *ngFor="let student of assingStudentList; let i =index ;">
+                  <td>{{i+1}})</td>
+                  <td><a (click)="studentChart(student.studentLessonId,student.name)" class="pointer">{{student.name}}</a></td>
+                  <td>{{student.nic}}</td>
+                  <td>
+                    <button (click)="markStudentLesson(student.studentLessonId,1)" *ngIf="student.complete==0"  type="button" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+                    <button (click)="markStudentLesson(student.studentLessonId,0)" *ngIf="student.complete==1"  type="button" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
+                  </td>
+               </tr>
+            </tbody>
+            </table>
+         </div>
+        <!-- Table Finish -->
+
+    </div>
+  </div>
+</div>
+
+

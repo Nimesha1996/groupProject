@@ -1,0 +1,119 @@
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Update Lesson</h4>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-2"></div>
+
+                <!-- New Lesson Add -->
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-header">
+                      <p class="card-title">Update Drivo Lesson</p>
+                    </div>
+                    <div *ngIf="isShowLessonSet" class="card-body">
+                        <div class="row">
+                          
+                          
+                         <!-- Day selection -->
+                         <div class="col-sm-8 col-lg-6">
+                            <div>
+                                <label for="sel1">Select Day:</label>
+                                <select class="form-control" name="day" [(ngModel)]="updateDay" [disabled]="true">
+                                  <option [ngValue]="selectDay" (click)="showInstructor()" selected >{{selectDayName}}</option>
+                                  <option (click)="showInstructor()" *ngFor="let day of dayListData"  [ngValue]="day.id" >{{day.name}}</option>
+                                </select>
+                                <small *ngIf="errorUpdateSelectDay" class="text-danger">{{errorUpdateSelectDay}}</small>
+                            </div>
+                         </div>
+                         <!-- Finish Day Selection -->
+
+                         <!-- Time Slot selection -->
+                         <div class="col-sm-8 col-lg-6">
+                            <div>
+                                
+                                  <label for="sel1">Time Slot:</label>
+                                  <select  class="form-control" [(ngModel)]="updateTimeSlot" name="selectTimeSlot">
+                                      <option [ngValue]="selectTimeSlot" (click)="showInstructor()" selected>{{selectTimeSlot.startTime | slice:0:5}} - {{selectTimeSlot.finishTime | slice:0:5}}</option>
+                                      <option *ngFor="let timeSlot of timeSlotListData" (click)="showInstructor()"    [ngValue]="timeSlot">{{timeSlot.startTime | slice:0:5}} - {{timeSlot.finishTime | slice:0:5}}</option>
+                                    </select>
+                                  <small *ngIf="errorUpdateSelectTimeSlot" class="text-danger">{{errorUpdateSelectTimeSlot}}</small>
+                                <!-- <p>Form value: {{ f.value | json }}</p> -->
+                            </div>
+                         </div>
+                         <!-- Finish Time Slot Selection -->
+
+                         <!-- Path selection -->
+                         <div class="col-sm-8 col-lg-12">
+                            <div>
+                                
+                                  <label for="sel1">Path(Map):</label>
+                                  <select  class="form-control" [(ngModel)]="updatePath" name="selectPath">
+                                    <option [ngValue]="selectPath" selected>{{selectPath.pathName}} ({{selectPath.origin}}-{{selectPath.destination}})</option>
+                                    <option  *ngFor="let path of pathListData"  [ngValue]="path" >{{path.pathName}} ({{path.origin}}-{{path.destination}})</option>
+                                  </select>
+                                  <small *ngIf="errorUpdateSelectPath" class="text-danger">{{errorUpdateSelectPath}}</small>
+                            </div>
+                         </div>
+                         <!-- Package Selection -->
+
+                         <!-- Package selection -->
+                         <div class="col-sm-8 col-lg-12">
+                            <div>
+                                  <label for="sel1">Package:</label>
+                                  <select  class="form-control" [(ngModel)]="selectPackage" name="selectPackage" [disabled]="true">
+                                    <option [ngValue]="selectPackage" selected disabled>{{selectPackage.title}}</option>
+                                  </select>
+                            </div>
+                         </div>
+                         <!-- Package Selection -->
+
+
+                         <!-- Instructor selection -->
+                         <div class="col-sm-8 col-lg-12">
+                            <div>
+                                
+                                  <label for="sel1">Instructor:</label>
+                                  <select  class="form-control" [(ngModel)]="updateInstructor" name="selectInstructor"   [attr.disabled] = " isdisableInstructor ? 'disabled' : null">
+                                    <option *ngIf="type==1" [ngValue]="selectInstructor" selected>{{selectInstructor.name}}</option>
+                                    <option *ngIf="type==0" [ngValue]="undefined" selected disabled>Select the Instructor</option>
+                                    <option  *ngFor="let instructor of instructorListData"  [ngValue]="instructor" >{{instructor.name}}</option>
+                                  </select>
+                                  <small *ngIf="errorUpdateInstructor && !isdisableInstructor" class="text-danger">{{errorUpdateSelectInstructor}}</small>
+                            </div>
+                         </div>
+                         <!-- Instructor Selection -->
+
+                         <!-- Student Add -->
+                         <div class="col-sm-6 col-lg-4">
+                            <div class="form-group">
+                                <label>Number Of Students</label>
+                                <input type="number" value="" placeholder="{{updateNumStudent}}" class="form-control" [(ngModel)]="updateNumStudent" />
+                                <small *ngIf="errorUpdateNumStudent" class="text-danger">{{errorUpdateNumStudent}}</small>
+                            </div>
+                        </div>
+                        <!-- Finish Student Add -->
+                         
+                        </div>
+                        <button  (click)="save()" type="button" class="btn btn-secondary btn-round">Save</button>
+                    </div>
+                  </div>
+                </div>
+                 <!-- New Lesson Add Finish-->
+
+                <div class="col-md-2"></div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

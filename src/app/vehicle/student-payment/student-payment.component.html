@@ -1,0 +1,121 @@
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        <button (click)=closeError() type="button" aria-hidden="true" class="close">
+          <i class="now-ui-icons ui-1_simple-remove"></i>
+        </button>
+        <span>{{errorMessage}}</span>
+      </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h6 class="card-subtitle mb-2 text-muted">Student Payment Details</h6>
+        </div>
+        <div class="card-body">
+         
+          <h3>Following Packages</h3>
+
+          <!-- Drop down -->
+          <div ngbDropdown class="dropdown" placement="bottom-left">
+              <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select the package</button>
+              <div ngbDropdownMenu>
+                  <div *ngFor="let package of studentPackages">
+                    <a (click)="paymentDetails(package.packageId)" class="dropdown-item" >{{package.title}}</a>
+                  </div>
+              </div>
+          </div>
+            <!-- Drop Down Finish -->
+
+          <hr>
+          
+          <div *ngIf="isSelectPackage">
+            <h3>{{selectPackage.title}} Payments</h3>
+            <p *ngIf="isStudent"><i class="fas fa-arrow-circle-down fa-1x"></i>  Do Online Payment</p>
+            <a *ngIf="balance>0"  (click)=doPaymentActive()><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Do Payment"></i></button></a>
+            
+            <!-- New Payment Add -->
+            
+            <div *ngIf="isPayment" class="card">
+              <div class="card-header">
+                  <button (click)=close() type="button" aria-hidden="true" class="close">
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+              </div>
+              <div class="card-body">
+                <div class="col-sm-6 col-lg-4">
+                  <div class="form-group">
+                      <label>Amount(Rs):</label>
+                      <input type="text" value="" placeholder="Rs:" class="form-control" name="newPayment" [(ngModel)]="newPayment"/>
+                      <small *ngIf="errorPaymentMessage" class="text-danger">{{errorPaymentMessage}}</small>
+                  </div>
+                </div>
+                <button *ngIf="isAdminStaff" (click)="doPayment(selectPackage.packageId)" type="button" class="btn btn-secondary btn-round">Pay</button>
+                <button *ngIf="isStudent" (click)="doPayPalPayment(selectPackage.packageId)" type="button" class="btn btn-primary btn-round"><i class="fab fa-paypal fa-1x">ay Pal</i></button>
+              
+              </div>
+              </div>
+            <!-- New Payment Add Finish -->
+
+              <!-- Table -->
+              <div class="table-responsive">
+                  <table class="table">
+                    <thead *ngIf="payment>0" class=" text-primary">
+                      <th></th>
+                      <th>Date</th>
+                      <th>Method</th>
+                      <th>Fee(Rs)</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let courseFee of courseFeelist">
+                        <td><i class="fas fa-angle-right"></i></td>
+                        <td>{{courseFee[2]}}</td>
+                        <td *ngIf="courseFee[3]==1">Cash</td>
+                        <td *ngIf="courseFee[3]==2">Online</td>
+                        <td>{{courseFee[1]}}</td>
+                      </tr>
+                      <!-- Course Fee -->
+                      <tr class=" text-info">
+                        <td></td>
+                        <td></td>
+                        <td><h6>Course Fee</h6></td>
+                        <td>{{courseFee.toFixed(2)}}</td>
+                      </tr>
+                      <!-- Course Fee Finish -->
+                      <!-- Course Payment -->
+                      <tr class=" text-info">
+                        <td></td>
+                        <td></td>
+                        <td><h6>Total Payment</h6></td>
+                        <td>{{payment.toFixed(2)}}</td>
+                      </tr>
+                      <!-- Course Payment Finish -->
+                       <!-- Balance Payment -->
+                       <tr class=" text-info">
+                        <td></td>
+                        <td></td>
+                        <td *ngIf="payment != courseFee" ><h6>Balance</h6></td>
+                        <td *ngIf="payment != courseFee" class="text-success"><h6>{{balance.toFixed(2)}}</h6></td>
+                        <td *ngIf="payment == courseFee" class="text-success"><h6><span class="alert alert-primary">Complete Payment</span></h6></td>
+                      </tr>
+                      <!-- Balance Payment Finish -->
+                    </tbody>
+                  </table>
+              </div>
+              <!-- Table Finish -->
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showSpinner" class="spinner-border text-secondary" role="status" id="loader">
+  <span class="sr-only">Loading...</span>
+</div>

@@ -1,0 +1,16 @@
+
+<div class="modal-header">
+    <p *ngIf="studentName!=''" class="modal-title"> {{studentName}}'s Practrical Details of  <b>{{studentChartData.packageName}}</b> Package</p>
+    <p *ngIf="studentName==''" class="modal-title"> Practrical Details of <b>{{studentChartData.packageName}}</b> Package</p>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+      <div id="chartContainer" style="height: 360px; width: 480px;"></div>
+      <hr>
+      <p>Trial Examination Date: {{studentChartData.trialExamDate}}</p>
+      <p> Remain Date for Trial Examination: {{studentChartData.remainDays}} days</p>
+</div>
+
+

@@ -1,0 +1,102 @@
+
+.notification {
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    border-radius: 30px;
+  }
+  
+  .notification:hover {
+    background: red;
+  }
+  
+  .notification .badge {
+    position: absolute;
+    top: -3px;
+    right: -5px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+  }
+
+  #searchBox{
+     height: 40px; 
+  }
+
+
+  .notifications {
+    max-width:420px; 
+    }
+  
+  .notifications-wrapper {
+     overflow:auto;
+     height:400px;
+     overflow-y: scroll;
+  }
+    
+ .menu-title {
+     color:#ff7788;
+     font-size:1.5rem;
+      display:inline-block;
+      } 
+   
+ .notification-heading, .notification-footer  {
+ 	padding:2px 10px;
+  }
+      
+        
+.dropdown-menu.divider {
+  margin:5px 0;          
+  }
+
+.item-title {
+ color:#000;
+    
+}
+
+.notifications a.content {
+ position: relative;
+ width:380px;
+ text-decoration:none;
+ background:#ccc;
+ border-radius:5px;
+ padding:10px;
+ margin:5px;
+ }
+
+ .dropdown-menu a:hover {background-color: #ddd;}
+    
+.notification-item {
+ padding:10px;
+ margin:5px;
+ border-radius:10px;
+ }
+
+
+.ow-anywhere { 
+  position: inherit;
+  color: black;
+  width: 360px;
+  word-wrap: break-word; /* old name */
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+#msg {
+  word-wrap: break-word;
+  width: 100px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+
+
+
+
+
+

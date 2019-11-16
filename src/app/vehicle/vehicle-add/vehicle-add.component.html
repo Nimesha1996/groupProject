@@ -1,0 +1,182 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <button (click)=closeError() type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span>{{errorMessage}}</span>
+              </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Error Message End -->
+
+  <div class="row">
+    <!-- First Column -->
+    <div class="col-md-1"></div>
+
+    <!-- Second Coulmn -->
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Register Vehicle</h5>
+        </div>
+        <div class="card-body">
+          <form  (ngSubmit)="registerStudent()">
+            
+            <!-- First Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Vehicle ID</label>
+                  <input type="text"  class="form-control" placeholder="Vehicle ID"  name="vehicle_id"   [(ngModel)]="vehicle_id">
+                  <small *ngIf="errorVehicle_id" class="text-danger">{{errorVehicle_id}}</small>
+                </div>
+              </div> 
+            </div>
+            <!-- End First Row -->
+
+            <!-- Secon Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Brand</label>
+                  <input [(ngModel)]="brand" type="text" class="form-control" placeholder="brand" name="brand">
+                  <small *ngIf="errorbrand" class="text-danger">{{errorbrand}}</small>
+                </div>
+              </div>
+            </div>
+            <!-- End Second Row -->
+
+            
+            <!-- Third Row -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Number</label>
+                  <input [(ngModel)]="nic" type="text" class="form-control" placeholder="Number" name="number">
+                  <small *ngIf="errorNumber" class="text-danger">{{errorNumber}}</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Model</label>
+                  <input [(ngModel)]="tel" type="text" class="form-control" placeholder="Telephone Number" name="tel">
+                  <small *ngIf="errorTel" class="text-danger">{{errorTel}}</small>
+                </div>
+              </div>
+            </div>
+            <!-- End Third Row -->
+            
+            <!-- Fourth Row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Fuel Type</label>
+                    <input [(ngModel)]="email" type="email" class="form-control" placeholder="Email" name="email">
+                    <small *ngIf="errorEmail" class="text-danger">{{errorEmail}}</small>
+                  </div>
+                </div>
+              </div>
+              <!-- End Fourth Row -->
+
+            <!-- 5 Row -->
+            <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label>Transmission</label>
+                    <input [(ngModel)]="password" type="password" class="form-control" placeholder="Password" name="password">
+                    <small *ngIf="errorPassword" class="text-danger">{{errorPassword}}</small>
+                  </div>
+                </div>
+              </div>
+            <!-- End 5 Row -->
+
+             <!-- 6 Row -->
+             <div class="row">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label>document_lic</label>
+                  <input [(ngModel)]="password" type="password" class="form-control" placeholder="Password" name="password">
+                  <small *ngIf="errorPassword" class="text-danger">{{errorPassword}}</small>
+                </div>
+              </div>
+            </div>
+          <!-- End 5 Row -->
+
+           <!-- 7 Row -->
+           <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+                <label>instructor_id</label>
+                <input [(ngModel)]="password" type="password" class="form-control" placeholder="Password" name="password">
+                <small *ngIf="errorPassword" class="text-danger">{{errorPassword}}</small>
+              </div>
+            </div>
+          </div>
+        <!-- End 5 Row -->
+
+         <!-- 8 Row -->
+         <div class="row">
+          <div class="col-md-5">
+            <div class="form-group">
+              <label>insurance_period</label>
+              <input [(ngModel)]="password" type="password" class="form-control" placeholder="Password" name="password">
+              <small *ngIf="errorPassword" class="text-danger">{{errorPassword}}</small>
+            </div>
+          </div>
+        </div>
+      <!-- End 5 Row -->
+
+       <!-- 9 Row -->
+       <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label>vehicle_category_id</label>
+            <input [(ngModel)]="password" type="password" class="form-control" placeholder="Password" name="password">
+            <small *ngIf="errorPassword" class="text-danger">{{errorPassword}}</small>
+          </div>
+        </div>
+      </div>
+    <!-- End 5 Row -->
+
+             <!-- Third Row -->
+             <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Exam Date</label>
+                    <input [(ngModel)]="examDate" type="date" class="form-control" placeholder="Exam Date" name="examDate">
+                    <small class="text-info">Insert written exam date ,If student not face to written exam yet.</small><br>
+                    <small *ngIf="errorExamDate" class="text-danger">{{errorExamDate}}</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Trial Date</label>
+                    <input [(ngModel)]="trialDate" type="date" class="form-control" placeholder="Trial Date" name="trialDate">
+                    <small class="text-info">Insert trial exam date ,If student not face to trial exam yet.</small><br>
+                    <small *ngIf="errorTrialExamDate" class="text-danger">{{errorTrialExamDate}}</small>
+                  </div>
+                  <small *ngIf="errorMessageDate" class="text-danger">{{errorMessageDate}}</small>
+                </div>
+              </div>
+              <!-- End Third Row -->
+            
+              <button  type="submit" class="btn btn-secondary btn-round">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Third Column -->
+    <div class="col-md-2"></div>
+
+  </div>
+</div>

@@ -1,0 +1,73 @@
+
+<div class="logo">
+    <a href="#" class="simple-text logo-mini">
+      <div class="logo-img">
+          <img src="./assets/img/logo.png"/>
+      </div>
+    </a>
+    <a href="#" class="simple-text logo-normal">
+        Drivo
+    </a>
+</div>
+<div class="sidebar-wrapper">
+    <!-- <ul *ngIf="isAdmin()" class="nav">
+        <li  routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+            <a [routerLink]="[menuItem.path]">
+                <i class="now-ui-icons {{menuItem.icon}}"></i>
+                <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+    </ul> -->
+
+
+    <!-- Admin Panel -->
+    <ul *ngIf="isAdmin()" class="nav">
+        <li  routerLinkActive="active" *ngFor="let menuItem of admin" class="{{menuItem.class}} nav-item">
+            <a [routerLink]="[menuItem.path]">
+                <i class="now-ui-icons {{menuItem.icon}}"></i>
+                <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+    </ul>
+
+     <!-- AdminStaffStudent Panel -->
+     <ul *ngIf="isAdminStaffStudent()" class="nav">
+            <li  routerLinkActive="active" *ngFor="let menuItem of adminStaffStudent" class="{{menuItem.class}} nav-item">
+                <a [routerLink]="[menuItem.path]">
+                    <i class="now-ui-icons {{menuItem.icon}}"></i>
+                    <p>{{menuItem.title}}</p>
+                </a>
+            </li>
+    </ul>
+
+     <!-- AdminStaffInstructor Panel -->
+     <ul *ngIf="isAdminStaffInstructor()" class="nav">
+            <li  routerLinkActive="active" *ngFor="let menuItem of adminStaffInstructor" class="{{menuItem.class}} nav-item">
+                <a [routerLink]="[menuItem.path]">
+                    <i class="now-ui-icons {{menuItem.icon}}"></i>
+                    <p>{{menuItem.title}}</p>
+                </a>
+            </li>
+    </ul>
+
+    <!-- Instructor Panel -->
+    <ul *ngIf="isInstructor()" class="nav">
+            <li  routerLinkActive="active" *ngFor="let menuItem of instructor" class="{{menuItem.class}} nav-item">
+                <a [routerLink]="[menuItem.path]">
+                    <i class="now-ui-icons {{menuItem.icon}}"></i>
+                    <p>{{menuItem.title}}</p>
+                </a>
+            </li>
+    </ul>
+
+    <!-- Student Panel -->
+    <ul *ngIf="isStudent()" class="nav">
+            <li  routerLinkActive="active" *ngFor="let menuItem of student" class="{{menuItem.class}} nav-item">
+                <a [routerLink]="[menuItem.path]">
+                    <i class="now-ui-icons {{menuItem.icon}}"></i>
+                    <p>{{menuItem.title}}</p>
+                </a>
+            </li>
+    </ul>
+
+</div>

@@ -1,0 +1,417 @@
+<div class="panel-header panel-header-sm">
+
+    <canvas hidden baseChart id="manualLessonChart"
+    [datasets]="lineChartGradientsNumbersData"
+    [labels]="lineChartGradientsNumbersLabels"
+    [colors]="lineChartGradientsNumbersColors"
+    [options]="lineChartGradientsNumbersOptions"
+    [chartType]="lineChartGradientsNumbersType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+    </canvas>
+
+    <canvas hidden baseChart id="autoLessonChart"
+    [datasets]="lineChartGradientsNumbersData"
+    [labels]="lineChartGradientsNumbersLabels"
+    [colors]="lineChartGradientsNumbersColors"
+    [options]="lineChartGradientsNumbersOptions"
+    [chartType]="lineChartGradientsNumbersType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+    </canvas>
+
+    <canvas hidden baseChart id="manualLessonStudentAttendanceChart"
+    [datasets]="lineChartStudentAttendanceDataManual"
+    [labels]="lineChartWithNumbersAndGridLabelsManual"
+    [colors]="lineChartWithNumbersAndGridColors"
+    [options]="lineChartWithNumbersAndGridOptions"
+    [chartType]="lineChartWithNumbersAndGridType"
+    (chartHover)="chartHovered($event)"></canvas>
+
+    <canvas hidden baseChart id="autoLessonStudentAttendanceChart"
+    [datasets]="lineChartStudentAttendanceDataAuto"
+    [labels]="lineChartWithNumbersAndGridLabelsAuto"
+    [colors]="lineChartWithNumbersAndGridColors"
+    [options]="lineChartWithNumbersAndGridOptions"
+    [chartType]="lineChartWithNumbersAndGridType"
+    (chartHover)="chartHovered($event)"></canvas>
+
+</div>
+  
+<div class="main-content">
+  <div class="card">
+      <div class="card-header">
+          <h4 class="card-title">Package Analysis</h4>
+      </div>
+      <div class="card-body">
+
+          <!-- package details -->
+          <!-- Drop down -->
+          <div ngbDropdown class="dropdown" placement="bottom-left">
+              <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle>Select the package</button>
+              <div ngbDropdownMenu>
+                  <div *ngFor="let package of packageList">
+                    <a (click)="selectPackageDetails(package)" class="dropdown-item" >{{package.title}}</a>
+                  </div>
+              </div>
+          </div>
+          <!-- Drop Down Finish -->
+          <!-- End Package Details -->
+
+          <hr>
+          
+          <!-- Manual Lesson  -->
+          <div *ngIf="selectPackage && isManual" class="card">
+              <div class="card-header">
+                  <h4 class="card-title">{{selectPackage.title}}(Manual)</h4>
+                  <a  *ngIf ="isSelectPackage" (click)="trialLessonDayFeedbackChart(1)"><button class="btn btn-primary btn-sm"> <i class="fas fa-question" title="{{titleOfSelectPackage}}'s favourite lesson days'"></i> </button></a>
+                  <a  *ngIf ="isSelectPackage"  (click)=addLesson()><button type="button" class="btn btn-success btn-sm" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
+                </div>
+
+              <div class="card">
+                  
+                  <div class="card-header">
+                      <u><small class="card-title">{{selectPackage.title}}(Manual)</small></u>
+                  </div>
+                  <div class="card-body">
+
+                       <!-- Message -->
+                       <div *ngIf="errorMsgManual != '' " class="alert alert-warning">
+                            <button (click)="closeMsg(1)" type="button" aria-hidden="true" class="close">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </button>
+                            <span *ngIf="errorMsgManual">{{errorMsgManual}}</span>
+                        </div>
+                        <!-- Message Finish -->   
+
+                      <!-- First Row -->
+                      <div class="row">
+                        <!-- <div class="col-md-1">  </div> -->
+                       
+                        <div class="col-md-3">
+
+                            <div *ngIf="isManualGraphActive" class="card card-chart">
+                                <div class="card-header">
+                                    <h5 class="card-category">Number Of Lessons PerDay</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas baseChart id="manualLessonChart"
+                                        [datasets]="lineChartManualData"
+                                        [labels]="lineChartGradientsNumbersLabels"
+                                        [colors]="lineChartGradientsNumbersColors"
+                                        [options]="lineChartGradientsNumbersOptions"
+                                        [chartType]="lineChartGradientsNumbersType"
+                                        (chartHover)="chartHovered($event)"
+                                        (chartClick)="ManualLessonChartClicked($event)">
+                                        </canvas>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    Total Lessons : {{manualTotalLesson}}
+                                </div>
+                            </div>
+
+                            
+
+                        </div>
+                        <div class="col-md-3">
+                            <p>Total Students   :   <b>{{manualTotalStudent}}</b></p>
+                            <p class="info">Analysis the average number of lessons per week :</p>
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="col-md-12">
+                                                <label>Lesson Time Period(min):</label>
+                                                <div class="form-group">
+                                                    <input type="text" (keyup.enter)="lessonAnalysisReport(1);" [(ngModel)]="lessonTimePeriodManual"  placeholder="120 min" class="form-control" />
+                                                    <small *ngIf="errorMsgLessonTimePeriodManual != '' " class="text-danger">{{errorMsgLessonTimePeriodManual}}</small>
+                                                </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                                <label>Student's Trial Time Period(min):</label>
+                                                <div class="form-group">
+                                                    <input type="text" (keyup.enter)="lessonAnalysisReport(1);" [(ngModel)]="studentTimePeriodManual"  placeholder="20 min" class="form-control" />
+                                                    <small *ngIf="errorMsgStudentTimePeriodManual != '' " class="text-danger">{{errorMsgStudentTimePeriodManual}}</small>
+                                                </div>
+                                        </div>
+                                        <!-- Form Information -->
+                                        <div *ngIf="isManualLessonAnalysisActive">
+                                            <pre>Lesson TimePeriod    : {{lessonTimePeriodManual}} min</pre>
+                                            <pre>Student TimePeriod   : {{studentTimePeriodManual}} min</pre>
+                                            <pre>Vehicle category     : {{vehicleCategory}}</pre>
+                                            <pre>Student In OneVehicle: {{numStudentForOneVehicleManual}}</pre>
+                                            _________________________
+                                            <pre>Lessons Per week    : <b>{{manualTotalLessonRecommend}}</b></pre>
+                                        </div>
+                                        <!-- Finish Information -->
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <div class="col-md-6">
+                            <div *ngIf="isManualTableActive" class="card">  
+                                <div class="card-header">
+                                    <h4 class="card-title">Lesson Details</h4>
+                                    <h6 class="card-subtitle mb-2 text-muted">(Last 2 weeks)</h6>
+                                </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead class=" text-primary">
+                                                <th></th>
+                                                <th *ngFor="let time of timeSlotIdManual">{{time.startTime | slice:0:5}} - {{time.finishTime | slice:0:5}}</th>
+                                            </thead>
+                                            <tbody>
+
+                                            <ng-container *ngFor="let lesson of  manualLessonTimeTable; let y= index">
+
+                                                    <tr>
+                                                        <td [attr.rowspan]="lesson.timeSlot.length">{{lesson.day}}</td>
+                                                        <ng-container *ngFor="let time of timeSlotIdManual">
+                                                            <td *ngIf="time.timeSlotId == lesson.timeSlot[0].timeSlotId"><a (click)="lessonStudentAttendance(lesson.lessonId[0],lesson.day,1,lesson.timeSlot[0])" class="pointer" > {{lesson.student[0]}} ({{lesson.stuPercentage[0] | number : '1.2-2'}}%) </a></td>
+                                                            <td *ngIf="time.timeSlotId != lesson.timeSlot[0].timeSlotId">-</td>
+                                                        </ng-container>
+                                                    </tr>
+
+                                                    <ng-container *ngFor="let data of lesson.timeSlot; let i = index;">
+                                                        <tr *ngIf="i!=0">
+                                                                <ng-container *ngFor="let time of timeSlotIdManual">
+                                                                        <td *ngIf="time.timeSlotId==lesson.timeSlot[i].timeSlotId"><a (click)="lessonStudentAttendance(lesson.lessonId[i],lesson.day,1,lesson.timeSlot[i])"  class="pointer" >{{lesson.student[i]}} ({{lesson.stuPercentage[i] | number : '1.2-2'}}%)</a></td>
+                                                                        <td *ngIf="time.timeSlotId != lesson.timeSlot[i].timeSlotId">-</td>
+                                                                </ng-container>
+                                                        </tr>
+                                                    </ng-container>
+
+                                            </ng-container>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+
+                       
+                      </div>
+                    <!-- First Row Finish  -->
+
+
+                    <!-- Student Attendance(Last 12 weeks) Graph Manual -->
+                    <div *ngIf="isManualLesson" class="card">
+                        <div class="card-header">
+                            <h6 class="card-category">
+                                Student Attendance({{manualLessonDay}} Lesson : {{manualLessonTimeSlot.startTime | slice:0:5}} - {{manualLessonTimeSlot.finishTime | slice:0:5}})
+                                <button (click)="studentAttendanceChangeButton(1,2)" *ngIf="isPastStudentAttendanceManual" type="button" class="btn btn-info btn-round btn-sm"><i class="fas fa-forward" title='Future'></i></button>
+                                <button (click)="studentAttendanceChangeButton(1,1)" *ngIf="isFutureStudentAttendanceManual" type="button" class="btn btn-info btn-round btn-sm"><i class="fas fa-backward" title='Past'></i></button>
+
+                                <button (click)="lessonUpdate(1)" type="button" class="btn btn-primary btn-sm float-right"><i class="fas fa-edit" title="Edit Lesson"></i></button>
+                                <button (click)="lessonDeactivate(1)" type="button" class="btn btn-secondary btn-sm float-right"><i class="fas fa-window-close" title="Deactivate Lesson"></i></button>
+                            </h6>
+                        </div>
+                        <div class="card-body">
+
+                                <div class="chart-area">
+                                <!-- <canvas id="lineChartExampleWithNumbersAndGrid"></canvas> -->
+                                <canvas baseChart id="manualLessonStudentAttendanceChart"
+                                            [datasets]="lineChartStudentAttendanceDataManual"
+                                            [labels]="lineChartWithNumbersAndGridLabelsManual"
+                                            [colors]="lineChartWithNumbersAndGridColors"
+                                            [options]="lineChartWithNumbersAndGridOptions"
+                                            [chartType]="lineChartWithNumbersAndGridType"
+                                            (chartHover)="chartHovered($event)"></canvas>
+                                </div>        
+                        </div>
+                        <div class="card-footer">
+                            <div  *ngIf="isPastStudentAttendanceManual" class="stats">
+                              <i class="now-ui-icons arrows-1_refresh-69"></i> Last 12 weeks (Lesson Published in {{lessonPublishDateManual}})
+                            </div>
+                            <div  *ngIf="isFutureStudentAttendanceManual" class="stats">
+                              <i class="now-ui-icons arrows-1_refresh-69"></i> Early 12 weeks (Lesson Published in {{lessonPublishDateManual}})
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Student Attendance Graph Manual Finish-->
+
+                  </div>
+              </div>
+            </div>
+             <!-- Manual Lesson Finish -->
+
+        <!-- Auto Lesson  -->
+        
+          <div *ngIf="selectPackage && isAuto" class="card">
+                <div class="card-header">
+                    <h4 class="card-title">{{selectPackage.title}}(Auto)</h4>
+                    <a  *ngIf ="isSelectPackage" (click)="trialLessonDayFeedbackChart(2)"><button class="btn btn-primary btn-sm"> <i class="fas fa-question" title="{{titleOfSelectPackage}}'s favourite lesson days'"></i> </button></a>
+                    <a  *ngIf ="isSelectPackage"  (click)=addLesson()><button type="button" class="btn btn-success btn-sm" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
+                </div>
+  
+                <div class="card">
+                    
+                    <div class="card-body">
+  
+                         <!-- Message -->
+                         <div *ngIf="errorMsgAuto != '' " class="alert alert-warning">
+                              <button (click)="closeMsg(2)" type="button" aria-hidden="true" class="close">
+                              <i class="now-ui-icons ui-1_simple-remove"></i>
+                              </button>
+                              <span *ngIf="errorMsgAuto">{{errorMsgAuto}}</span>
+                          </div>
+                          <!-- Message Finish -->   
+  
+                        <!-- First Row -->
+                        <div class="row">
+                          <!-- <div class="col-md-1">  </div> -->
+                         
+                          <div class="col-md-3">
+  
+                              <div *ngIf="isAutoGraphActive" class="card card-chart">
+                                  <div class="card-header">
+                                      <h5 class="card-category">Number Of Lessons PerDay</h5>
+                                  </div>
+                                  <div class="card-body">
+                                      <div class="chart-area">
+                                          <canvas baseChart id="autoLessonChart"
+                                          [datasets]="lineChartAutoData"
+                                          [labels]="lineChartGradientsNumbersLabels"
+                                          [colors]="lineChartGradientsNumbersColors"
+                                          [options]="lineChartGradientsNumbersOptions"
+                                          [chartType]="lineChartGradientsNumbersType"
+                                          (chartHover)="chartHovered($event)"
+                                          (chartClick)="ManualLessonChartClicked($event)">
+                                          </canvas>
+                                      </div>
+                                  </div>
+                                  <div class="card-footer">
+                                      Total Lessons : {{autoTotalLesson}}
+                                  </div>
+                              </div>
+  
+                              
+  
+                          </div>
+                          <div class="col-md-3">
+                              <p>Total Students   :   <b>{{autoTotalStudent}}</b></p>
+                              <p class="info">Analysis the average number of lessons per week :</p>
+                              
+                              <div class="card">
+                                  <div class="card-body">
+                                          <div class="col-md-12">
+                                                  <label>Lesson Time Period(min):</label>
+                                                  <div class="form-group">
+                                                      <input type="text" (keyup.enter)="lessonAnalysisReport(2);" [(ngModel)]="lessonTimePeriodAuto"  placeholder="120 min" class="form-control" />
+                                                      <small *ngIf="errorMsgLessonTimePeriodAuto != '' " class="text-danger">{{errorMsgLessonTimePeriodAuto}}</small>
+                                                  </div>
+                                          </div>
+                                          <div class="col-md-12">
+                                                  <label>Student's Trial Time Period(min):</label>
+                                                  <div class="form-group">
+                                                      <input type="text" (keyup.enter)="lessonAnalysisReport(2);" [(ngModel)]="studentTimePeriodAuto"  placeholder="20 min" class="form-control" />
+                                                      <small *ngIf="errorMsgStudentTimePeriodAuto != '' " class="text-danger">{{errorMsgStudentTimePeriodAuto}}</small>
+                                                  </div>
+                                          </div>
+                                          <!-- Form Information -->
+                                          <div *ngIf="isAutoLessonAnalysisActive">
+                                              <pre>Lesson TimePeriod    : {{lessonTimePeriodAuto}} min</pre>
+                                              <pre>Student TimePeriod   : {{studentTimePeriodAuto}} min</pre>
+                                              <pre>Vehicle category     : {{vehicleCategory}}</pre>
+                                              <pre>Student In OneVehicle: {{numStudentForOneVehicleAuto}}</pre>
+                                              _________________________
+                                              <pre>Lessons Per week    : <b>{{autoTotalLessonRecommend}}</b></pre>
+                                          </div>
+                                          <!-- Finish Information -->
+                                  </div>
+                              </div>
+                             
+                          </div>
+  
+                          <div class="col-md-6">
+                              <div *ngIf="isAutoTableActive" class="card">  
+                                  <div class="card-header">
+                                      <h4 class="card-title">Lesson Details</h4>
+                                      <h6 class="card-subtitle mb-2 text-muted">(Last 2 weeks)</h6>
+                                  </div>
+                                      <div class="table-responsive">
+                                          <table class="table">
+                                              <thead class=" text-primary">
+                                                  <th></th>
+                                                  <th *ngFor="let time of timeSlotIdAuto">{{time.startTime | slice:0:5}} - {{time.finishTime | slice:0:5}}</th>
+                                              </thead>
+                                              <tbody>
+  
+                                              <ng-container *ngFor="let lesson of  autoLessonTimeTable; let y= index">
+  
+                                                      <tr>
+                                                          <td [attr.rowspan]="lesson.timeSlot.length">{{lesson.day}}</td>
+                                                          <ng-container *ngFor="let time of timeSlotIdAuto">
+                                                              <td *ngIf="time.timeSlotId == lesson.timeSlot[0].timeSlotId"><a (click)="lessonStudentAttendance(lesson.lessonId[0],lesson.day,2,lesson.timeSlot[0])"  class="pointer">{{lesson.student[0]}} ({{lesson.stuPercentage[0] | number : '1.2-2'}}%) </a></td>
+                                                              <td *ngIf="time.timeSlotId != lesson.timeSlot[0].timeSlotId">-</td>
+                                                          </ng-container>
+                                                      </tr>
+  
+                                                      <ng-container *ngFor="let data of lesson.timeSlot; let i = index;">
+                                                          <tr *ngIf="i!=0">
+                                                                  <ng-container *ngFor="let time of timeSlotIdAuto">
+                                                                          <td *ngIf="time.timeSlotId==lesson.timeSlot[i].timeSlotId"><a (click)="lessonStudentAttendance(lesson.lessonId[i],lesson.day,2,lesson.timeSlot[i])"  class="pointer">{{lesson.student[i]}} ({{lesson.stuPercentage[i] | number : '1.2-2'}}%) </a></td>
+                                                                          <td *ngIf="time.timeSlotId != lesson.timeSlot[i].timeSlotId">-</td>
+                                                                  </ng-container>
+                                                          </tr>
+                                                      </ng-container>
+  
+                                              </ng-container>
+  
+                                              </tbody>
+                                          </table>
+                                      </div>
+                              </div>
+                          </div>
+  
+                         
+                        </div>
+                      <!-- First Row Finish  -->
+
+                    <!-- Student Attendance Graph Auto -->
+                    <div *ngIf="isAutoLesson" class="card">
+                        <div class="card-header">
+                            <h6 class="card-category">
+                                Student Attendance({{autoLessonDay}} Lesson : {{autoLessonTimeSlot.startTime | slice:0:5}} - {{autoLessonTimeSlot.finishTime | slice:0:5}})
+                                <button (click)="studentAttendanceChangeButton(2,2)" *ngIf="isPastStudentAttendanceAuto" type="button" class="btn btn-primary btn-round btn-sm"><i class="fas fa-forward" title='Future'></i></button>
+                                <button (click)="studentAttendanceChangeButton(2,1)" *ngIf="isFutureStudentAttendanceAuto" type="button" class="btn btn-primary btn-round btn-sm"><i class="fas fa-backward" title='Past'></i></button>
+
+                                <button (click)="lessonUpdate(2)" type="button" class="btn btn-primary btn-sm float-right"><i class="fas fa-edit" title="Edit Lesson"></i></button>
+                                <button (click)="lessonDeactivate(2)" type="button" class="btn btn-secondary btn-sm float-right"><i class="fas fa-window-close" title="Deactivate Lesson"></i></button>
+                            </h6>
+                        </div>
+                        <div class="card-body">
+
+                                <div class="chart-area">
+                                <!-- <canvas id="lineChartExampleWithNumbersAndGrid"></canvas> -->
+                                <canvas baseChart id="autoLessonStudentAttendanceChart"
+                                            [datasets]="lineChartStudentAttendanceDataAuto"
+                                            [labels]="lineChartWithNumbersAndGridLabelsAuto"
+                                            [colors]="lineChartWithNumbersAndGridColors"
+                                            [options]="lineChartWithNumbersAndGridOptions"
+                                            [chartType]="lineChartWithNumbersAndGridType"
+                                            (chartHover)="chartHovered($event)"></canvas>
+                                </div>        
+                        </div>
+                        <div class="card-footer">
+                            <div  *ngIf="isPastStudentAttendanceAuto" class="stats">
+                              <i class="now-ui-icons arrows-1_refresh-69"></i> Last 12 weeks (Lesson Published in {{lessonPublishDateAuto}})
+                            </div>
+                            <div  *ngIf="isFutureStudentAttendanceAuto" class="stats">
+                              <i class="now-ui-icons arrows-1_refresh-69"></i> Early 12 weeks (Lesson Published in {{lessonPublishDateAuto}})
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Student Attendance Graph Auto Finish-->
+  
+                    </div>
+                </div>
+              </div>
+               <!-- Auto Lesson Finish -->
+
+      </div>
+  </div>
+</div>
+  

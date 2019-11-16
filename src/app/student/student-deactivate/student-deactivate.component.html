@@ -1,0 +1,59 @@
+<div class="panel-header panel-header-sm">
+</div>
+
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9">
+            <h4 class="card-title">Deactivate Student's Accounts</h4>
+        </div>
+        <div class="col-md-3">
+            <form>
+                <div class="input-group no-border">
+                  <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                    </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th></th>
+                <th>NIC</th>
+                <th>Name</th>
+                <th>Option</th>
+              </thead>
+              <tbody id="mytable">
+                <tr *ngFor="let student of filteredDeactivateStudent; let i = index">
+                  <td>{{i+1}})</td>
+                  <td>{{student.nic}}</td>
+                  <td>{{student.name}}</td>
+                  <td>  
+                    <a  (click)=acivateStudentAccount(student.studentId,student.name)><button class="btn btn-danger btn-sm"><i class="fas fa-times" title="Active"></i></button></a>
+                    <a  (click)=addPayment(student.studentId)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      
+    </div>
+  </div>
+</div>

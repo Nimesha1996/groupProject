@@ -1,0 +1,188 @@
+<div class="panel-header panel-header-lg">
+    <canvas baseChart id="bigDashboardChart"
+                [datasets]="lineBigDashboardChartData"
+                [labels]="lineBigDashboardChartLabels"
+                 [colors]="lineBigDashboardChartColors"
+                [options]="lineBigDashboardChartOptions"
+                [chartType]="lineBigDashboardChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+</div>
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Pass Rate Written Examination</h5>
+          <h4 class="card-title">Written Exam</h4>
+          <div ngbDropdown>
+            <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
+              <i class="now-ui-icons loader_gear"></i>
+            </button>
+            <div ngbDropdownMenu class="dropdown-menu-right">
+              <a class="dropdown-item" routerLink="/student-exam-result-add" >Add Written Exam Result Data</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas baseChart id="lineChartExample"
+                        [datasets]="lineChartData"
+                        [labels]="lineChartLabels"
+                        [colors]="lineChartColors"
+                        [options]="lineChartOptions"
+                        [chartType]="lineChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">2018 Sales</h5>
+          <h4 class="card-title">All products</h4>
+          <div ngbDropdown>
+            <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
+              <i class="now-ui-icons loader_gear"></i>
+            </button>
+            <div ngbDropdownMenu class="dropdown-menu-right">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item text-danger" href="#">Remove Data</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <!-- <canvas id="lineChartExampleWithNumbersAndGrid"></canvas> -->
+            <canvas baseChart id="lineChartExampleWithNumbersAndGrid"
+                        [datasets]="lineChartWithNumbersAndGridData"
+                        [labels]="lineChartWithNumbersAndGridLabels"
+                        [colors]="lineChartWithNumbersAndGridColors"
+                        [options]="lineChartWithNumbersAndGridOptions"
+                        [chartType]="lineChartWithNumbersAndGridType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Email Statistics</h5>
+          <h4 class="card-title">24 Hours Performance</h4>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas baseChart id="barChartSimpleGradientsNumbers"
+                        [datasets]="lineChartGradientsNumbersData"
+                        [labels]="lineChartGradientsNumbersLabels"
+                        [colors]="lineChartGradientsNumbersColors"
+                        [options]="lineChartGradientsNumbersOptions"
+                        [chartType]="lineChartGradientsNumbersType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+    <!-- First Column Start -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-category">Student Examination List</h5>
+          <h4 class="card-title">Today Exam students</h4>
+        </div>
+        <div class="card-body">
+          <!-- Notification -->
+          <div *ngIf="!isExamStudent" class="alert alert-primary">
+              <!-- <button type="button" aria-hidden="true" class="close">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button> -->
+              <span>No any students for today Trial Examination.</span>
+          </div>
+          <!-- End Notification -->
+          <div class="table-responsive">
+            <table *ngIf="isExamStudent" class="table" id="trial-table">
+              <thead class=" text-primary">
+                <tr>
+                  <th>Name</th>
+                  <th>NIC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let examStudent of examStudents">
+                  <td>{{examStudent.name}}</td>
+                  <td>{{examStudent.nic}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button *ngIf="isExamStudent" class="btn btn-info" (click)="generatePdf('Exam Students')">Generate PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- First Column Finish-->
+
+    <!-- Second Column Start -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-category">Student Trial List</h5>
+          <h4 class="card-title">Today Trial students</h4>
+        </div>
+        <div class="card-body">
+          <!-- Notification -->
+          <div *ngIf="!isTrialStudent" class="alert alert-primary">
+              <!-- <button type="button" aria-hidden="true" class="close">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button> -->
+              <span>No any students for today Trial Examination.</span>
+          </div>
+          <!-- End Notification -->
+          <div class="table-responsive">
+            <table *ngIf="isTrialStudent" class="table" id="trial-table">
+              <thead class=" text-primary">
+                <tr>
+                  <th>Name</th>
+                  <th>NIC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let trialStudent of trialStudents">
+                  <td>{{trialStudent.name}}</td>
+                  <td>{{trialStudent.nic}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button *ngIf="isTrialStudent" class="btn btn-info" (click)="generatePdf('Trial Students')">Generate PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

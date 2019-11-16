@@ -1,0 +1,114 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Edit Profile</h5>
+        </div>
+        <div class="card-body">
+          <form  (ngSubmit)="save()">
+            
+            <!-- First Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input type="text"  class="form-control" placeholder="Full Name"  name="name"   [(ngModel)]="studentData.name">
+                  <small *ngIf="errorName" class="text-danger">{{errorName}}</small>
+                </div>
+              </div> 
+            </div>
+            <!-- End First Row -->
+
+            <!-- Second Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Address</label>
+                  <input [(ngModel)]="studentData.address" type="text" class="form-control" placeholder="Home Address" name="address">
+                  <small *ngIf="errorAddress" class="text-danger">{{errorAddress}}</small>
+                </div>
+              </div>
+            </div>
+            <!-- End Second Row -->
+
+            
+            <!-- Third Row -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>NIC</label>
+                  <input [(ngModel)]="studentData.nic" type="text" class="form-control" placeholder="National ID" name="nic">
+                  <small *ngIf="errorNic" class="text-danger">{{errorNic}}</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Tel</label>
+                  <input [(ngModel)]="studentData.tel" type="text" class="form-control" placeholder="Telephone Number" name="tel">
+                  <small *ngIf="errorTel" class="text-danger">{{errorTel}}</small>
+                </div>
+              </div>
+            </div>
+            <!-- End Third Row -->
+            
+            <!-- Fourth Row -->
+            <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input [(ngModel)]="studentData.userId.email" type="email" class="form-control" placeholder="Email" name="email">
+                    <small *ngIf="errorEmail" class="text-danger">{{errorEmail}}</small>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input [(ngModel)]="studentData.userId.password" type="password" class="form-control" placeholder="Password" name="password">
+                    <small *ngIf="errorPassword" class="text-danger">{{errorPassword}}</small>
+                  </div>
+                </div>
+
+              </div>
+              <!-- End Fourth Row -->
+
+            
+            <button  type="submit" class="btn btn-primary btn-round">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/loginImge.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a>
+              <img class="avatar border-gray" src="../assets/img/user.png" alt="...">
+              <h5 class="title text-primary">{{studentName}}</h5>
+            </a>
+            <p class="description">
+              Student Account
+            </p>
+          </div>
+          <p class="description text-center">
+            "Learn
+            <br> to Drive
+            <br> Know the Rules
+            <br>Pass the Test"
+          </p>
+        </div>
+        <hr>
+        <div class="button-container">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

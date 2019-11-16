@@ -1,0 +1,151 @@
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+            <h5 class="card-category">Exam Result</h5>
+            <h4 class="card-title">Written Exam Result</h4>
+        </div>
+        <div class="card-body">
+             
+            <!-- Search Box-->
+             <div class="form-group">
+                <label>Date</label>
+                <input type="date"  class="form-control" placeholder="Enter Date"  name="date" [(ngModel)]="examDate">
+                 <small *ngIf="errorWrittenDateMessage" class="text-danger">Date Required</small>
+              </div>
+            <button (click)="getWrittenExamData()" type="button" class="btn btn-info btn-round">Search</button>
+            <!-- End Search Box -->
+              
+
+              <!-- Notifiacation -->
+              <div *ngIf="!isWrittenExamDate && selectWrittenExam" class="alert alert-primary">
+                  <!-- <button type="button" aria-hidden="true" class="close">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button> -->
+                  <span>No any students.</span>
+              </div>
+              <!-- Notification -->
+              <!-- Form -->
+              <div  *ngIf="isWrittenExamDate" class="card">
+                <div class="card-header">
+                    <button (click)=closeWrittenExamTable() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                    Date:<h6 class="card-title">{{examDate}}</h6>
+                </div>
+                <div class="card-body">
+                      
+                      <div class="table-responsive">
+                          <table class="table">
+                            <thead class=" text-primary">
+                                <th>Name</th>
+                                <th>NIC</th>
+                                <th>Pass Student</th>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let student of writtenExamList">
+                                <td>{{student.name}}</td>
+                                <td>{{student.nic}}</td>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input  (click)="countCheckWrittenExam(student.nic)" class="form-check-input" type="checkbox"  name="writtenExamChecked"  checked> 
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                            <button (click)="submitWrittenExamResult()" type="button" class="btn btn-success btn-round">Submit</button>
+                          </table>
+                      </div>
+
+
+                </div>
+              </div>
+              <!-- Form End -->
+         
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-category">Exam Result</h5>
+                <h4 class="card-title">Trial Exam Result</h4>
+            </div>
+          <div class="card-body">
+           
+                <!-- Search Box-->
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date"  class="form-control" placeholder="Enter Date"  name="date" [(ngModel)]="trialDate">
+                     <small *ngIf="errorTrialDateMessage" class="text-danger">Date Required</small>
+                  </div>
+                <button (click)="getTrialExamData()" type="button" class="btn btn-info btn-round">Search</button>
+                <!-- End Search Box -->
+                  
+    
+                  <!-- Notifiacation -->
+                  <div *ngIf="!isTrialExamDate && selectTrialExam" class="alert alert-primary">
+                      <!-- <button type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button> -->
+                      <span>No any students.</span>
+                  </div>
+                  <!-- Notification -->
+                  <!-- Form -->
+                  <div  *ngIf="isTrialExamDate" class="card">
+                    <div class="card-header">
+                        <button (click)=closeTrialExamTable() type="button" aria-hidden="true" class="close">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </button>
+                        Date:<h6 class="card-title">{{trialDate}}</h6>
+
+                    </div>
+                    <div class="card-body">
+                          
+                          <div class="table-responsive">
+                              <table class="table">
+                                <thead class=" text-primary">
+                                    <th>Name</th>
+                                    <th>NIC</th>
+                                    <th>Pass Student</th>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let student of trialExamList">
+                                    <td>{{student.name}}</td>
+                                    <td>{{student.nic}}</td>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input  (click)="countCheckTrialExam(student.nic)" class="form-check-input" type="checkbox"  name="trialExamChecked"  checked> 
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                <button (click)="submitTrialExamResult()" type="button" class="btn btn-success btn-round">Submit</button>
+                              </table>
+                          </div>
+    
+    
+                    </div>
+                  </div>
+                  <!-- Form End -->
+           
+          </div>
+        </div>
+    </div>
+
+
+  </div>
+</div>
+

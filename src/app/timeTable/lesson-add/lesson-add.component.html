@@ -1,0 +1,139 @@
+<div class="panel-header panel-header-sm" >
+  </div>
+  
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Add New Lesson</h4>
+              <button (click)="timeSlot()" type="button" class="btn btn-primary btn-round"><i class="fas fa-cog"></i> Time Slot</button>
+              <button (click)="maps()" type="button" class="btn btn-primary btn-round"><i class="fas fa-cog"></i> Map</button>
+          </div>
+          <div class="card-body">
+
+              <div class="row">
+                  <div class="col-md-2"></div>
+
+                  <!-- New Lesson Add -->
+                  <div class="col-md-8">
+                    <div class="card">
+                      <div class="card-header">
+                        <p class="card-title">Lesson Registration</p>
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                            
+                            
+                           <!-- Day selection -->
+                           <div class="col-sm-8 col-lg-6">
+                              <div>
+                                  <label for="sel1">Select Day:</label>
+                                  <select class="form-control" name="day" [(ngModel)]="selectDay">
+                                    <option [ngValue]="undefined" selected disabled>Select a Day</option>
+                                    <option (click)="showInstructor()" *ngFor="let day of dayListData"  [ngValue]="day.id" >{{day.name}}</option>
+                                  </select>
+                                  <small *ngIf="errorSelectDay" class="text-danger">{{errorSelectDay}}</small>
+                              </div>
+                           </div>
+                           <!-- Finish Day Selection -->
+
+                           <!-- Time Slot selection -->
+                           <div class="col-sm-8 col-lg-6">
+                              <div>
+                                  
+                                    <label for="sel1">Time Slot:</label>
+                                    <select  class="form-control" [(ngModel)]="selectTimeSlot" name="selectTimeSlot">
+                                      <option [ngValue]="undefined" selected disabled>Select a Time Slot</option>
+                                      <option (click)="showInstructor()"  *ngFor="let timeSlot of timeSlotListData"  [ngValue]="timeSlot" >{{timeSlot.startTime | slice:0:5}} - {{timeSlot.finishTime | slice:0:5}}</option>
+                                    </select>
+                                    <small *ngIf="errorSelectTimeSlot" class="text-danger">{{errorSelectTimeSlot}}</small>
+                                  <!-- <p>Form value: {{ f.value | json }}</p> -->
+                              </div>
+                           </div>
+                           <!-- Finish Time Slot Selection -->
+
+                           <!-- Path selection -->
+                           <div class="col-sm-8 col-lg-12">
+                              <div>
+                                  
+                                    <label for="sel1">Path(Map):</label>
+                                    <select  class="form-control" [(ngModel)]="selectPath" name="selectPath">
+                                      <option [ngValue]="undefined" selected disabled>Select a Path</option>
+                                      <option  *ngFor="let path of pathListData"  [ngValue]="path" >{{path.pathName}} ({{path.origin}}-{{path.destination}})</option>
+                                    </select>
+                                    <small *ngIf="errorSelectPath" class="text-danger">{{errorSelectPath}}</small>
+                              </div>
+                           </div>
+                           <!-- Package Selection -->
+
+                           <!-- Package selection -->
+                           <div class="col-sm-8 col-lg-12">
+                              <div>
+                                  
+                                    <label for="sel1">Package:</label>
+                                    <select  class="form-control" [(ngModel)]="selectPackage" name="selectTimeSlot">
+                                      <option [ngValue]="undefined" selected disabled>Select a Package</option>
+                                      <option (click)="showTransmission(package)" *ngFor="let package of packageListData"  [ngValue]="package" >{{package.title}}</option>
+                                    </select>
+                                    <small *ngIf="errorSelectPackage" class="text-danger">{{errorSelectPackage}}</small>
+                              </div>
+                           </div>
+                           <!-- Package Selection -->
+
+                           <!-- Transmission Selection -->
+                           <div *ngIf="isTransmissionSelect" class="form-check form-check-radio">
+                              <label class="form-check-label">
+                                  <input (click)="selectOption(1)" class="form-check-input"  type="radio" name="selectTransmission" id="selectTransmissionManual"  checked>
+                                  Manual
+                                  <span class="form-check-sign"></span>
+                              </label>
+                          </div>
+                          <div  *ngIf="isTransmissionSelect" class="form-check form-check-radio">
+                              <label class="form-check-label">
+                                  <input (click)="selectOption(2)" class="form-check-input"  type="radio" name="selectTransmission" id="selectTransmissionAuto"  >
+                                  Auto
+                                  <span class="form-check-sign"></span>
+                              </label>
+                          </div>
+                           <!-- Finish Transmission Selection -->
+
+                           <!-- Instructor selection -->
+                           <div class="col-sm-8 col-lg-12">
+                              <div>
+                                  
+                                    <label for="sel1">Instructor:</label>
+                                    <select  class="form-control" [(ngModel)]="selectInstructor" name="selectInstructor"   [attr.disabled] = " isdisableInstructor ? 'disabled' : null">
+                                      <option [ngValue]="undefined" selected disabled>Select a Instructor</option>
+                                      <option  *ngFor="let instructor of instructorListData"  [ngValue]="instructor" >{{instructor.name}}</option>
+                                    </select>
+                                    <small *ngIf="errorSelectInstructor && !isdisableInstructor" class="text-danger">{{errorSelectInstructor}}</small>
+                              </div>
+                           </div>
+                           <!-- Instructor Selection -->
+
+                           <!-- Student Add -->
+                           <div class="col-sm-6 col-lg-4">
+                              <div class="form-group">
+                                  <label>Number Of Students</label>
+                                  <input type="number" value="" placeholder="0" class="form-control" [(ngModel)]="numStudent" />
+                                  <small *ngIf="errorNumStudent" class="text-danger">{{errorNumStudent}}</small>
+                              </div>
+                          </div>
+                          <!-- Finish Student Add -->
+                           
+                          </div>
+                          <button  (click)="save()" type="button" class="btn btn-secondary btn-round">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                   <!-- New Lesson Add Finish-->
+
+                  <div class="col-md-2"></div>
+              </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

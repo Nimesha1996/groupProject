@@ -1,0 +1,117 @@
+<div class="panel-header panel-header-sm">
+</div>
+
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Trial Lesson Details</h4>
+        </div>
+        <div class="card-body">
+
+           <!-- Message -->
+           <div *ngIf="errorMessage"class="alert alert-danger">
+              <button (click)="closeMsg()" type="button" aria-hidden="true" class="close">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button>
+              <span>{{errorMessage}}</span>
+           </div>
+            <!-- Message Finish -->
+
+
+          <!-- Drop down -->
+          <div ngbDropdown class="dropdown" placement="bottom-left">
+            <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select the package</button>
+            <div ngbDropdownMenu>
+                <div *ngFor="let package of studentPackages">
+                  <a (click)="bookLessonDetails(package.packageId,package.title)"  class="dropdown-item" >{{package.title}}</a>
+                </div>
+            </div>
+          </div>
+          <!-- Drop Down Finish -->
+          <a  *ngIf ="isSelectPackage" (click)="trialLessonDayFeedback()"><button class="btn btn-secondary btn-sm"> <i class="fas fa-question" title="{{titleOfSelectPackage}}'s favourite lesson days'"></i> </button></a>
+          <div class="card" *ngIf="isBookLeeson">
+            <div class="card-body">
+              <pre>Package Name     :{{selectPackageTitle}}({{transmission}})</pre>
+              <pre>Total Lessons    :{{totalLesson}}</pre>
+              <pre>Reserved Lessons :{{reservedLesson}}</pre>
+              <hr>
+              <pre>Remain Lessons   :{{remainLesson}}</pre>
+              <hr>
+              <a  (click)="studentChart()"><button class="btn btn-success btn-sm"> <i class="fas fa-chart-pie"></i> </button></a>
+              <!-- Future Lesson Table -->
+              <div *ngIf="isFutureLesson" class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Future(Book) Lessons</h4>
+                </div>
+                <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead class=" text-primary">
+                            <th></th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Vehicle</th>
+                            <th>Instructor</th>
+                            <th>Path</th>
+                            <th>Option</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let studentLesson of futureLesson; let i = index;">
+                              <td>{{i+1}})</td>
+                              <td>{{studentLesson.date}}</td>
+                              <td>{{studentLesson.lessonId.timeSlotId.startTime | slice:0:5}} - {{studentLesson.lessonId.timeSlotId.finishTime | slice:0:5}}</td>
+                              <td>{{studentLesson.lessonId.packageId.vehicleCategoryId.category}}({{transmission}})</td>
+                              <td>{{studentLesson.lessonId.instructorId.staffId.name}}</td>
+                              <td><a  (click)=googleMap(studentLesson.lessonId.pathId,1)><button class="btn btn-info btn-sm"> <i class="fas fa-map" title="Google Map"></i></button></a></td>
+                              <td><a  (click)="cacelBooking(studentLesson)"><button class="btn btn-danger btn-sm"> <i class="fas fa-window-close" title="Cancel Lesson"></i></button></a></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+              </div>
+              <!--Finish  Future Lesson Table -->
+
+              <!-- Previous Lessons -->
+              <div  class="card" *ngIf="isPreviousLesson">
+                <div class="card-header">
+                  <h4 class="card-title">Previous(Book) Lessons</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table">
+                          <thead class=" text-primary">
+                            <th></th>
+                            <th>Date</th>
+                            <th>State</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let lesson of previousLesson; let i=index;">
+                              <td>{{i+1}})</td>
+                              <td>{{lesson.date}}</td>
+                              
+                              <td  *ngIf="lesson.complete==1">Completed</td>
+                              <td  *ngIf="lesson.complete==0">Not Completed</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                </div>
+              </div>
+              <!-- Finish Previous Lessons -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

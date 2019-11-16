@@ -1,0 +1,99 @@
+
+<nav class="navbar navbar-expand-lg   navbar-absolute bg-dark fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <div class="navbar-toggle">
+                <button type="button" class="navbar-toggler" (click)="sidebarToggle()">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <!-- <a class="navbar-brand" href="#pablo">{{getTitle()}}</a> -->
+        </div>
+        <button class="navbar-toggler" type="button" (click)="collapse()"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+          <span class="navbar-toggler-bar navbar-kebab"></span>
+          <span class="navbar-toggler-bar navbar-kebab"></span>
+          <span class="navbar-toggler-bar navbar-kebab"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
+          <!-- <form>
+            <div class="input-group no-border">
+              <input type="text" value="" class="form-control" placeholder="Search..." id="searchBox">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <i class="now-ui-icons ui-1_zoom-bold"></i>
+                </div>
+              </div>
+            </div>
+          </form> -->
+          <ul class="navbar-nav">
+
+            <!-- Profile -->
+            <li class="nav-item">
+              <a (click)="profile()" class="nav-link">
+                <i class="now-ui-icons users_single-02" title="Profile" ></i>
+              </a>
+            </li>
+             <!-- Profile -->
+
+            <!-- Notification Button -->
+            
+              <li  class="nav-item" ngbDropdown>
+                <a (click)="notificationBadge()" title="Notifications" class="nav-link notification" id="dropdownBasic1" ngbDropdownToggle>
+                  <span data-notify="icon" class="now-ui-icons ui-1_bell-53"><span *ngIf="isNewNotification && isNotificationBadgeOn" class="badge">{{newNotificationList.length}}</span></span>
+                </a>
+
+                <ul *ngIf="isEarlyNotification || isNewNotification" class="dropdown-menu-right notifications" role="menu" aria-labelledby="dropdownBasic1" ngbDropdownMenu>
+      
+                    <div class="notification-heading">
+                      <p class="menu-title">Notifications</p>
+                    </div>
+                    <li class="divider"></li>
+                  
+                    <div class="notifications-wrapper">
+                    
+                      <div *ngIf="isNewNotification" id="mainbox">
+                          <small style="color: coral;margin: 10px;">New</small>
+                          <a  *ngFor="let notification of newNotificationList" class="content dropdown-item pointer">
+                              <div class="notification-item">
+                                <h6 class="item-title">{{notification.title}}</h6>
+                                <p id="msg">{{notification.message}}</p><br>
+                                <small style="color: blue;">{{notification.dateDiff}}</small>
+                              </div>  
+                          </a>
+                      </div>
+
+                      <div *ngIf="isEarlyNotification">
+                          <small style="color: coral;margin: 10px;">Early</small>
+                          <a *ngFor="let notification of earlyNotification" class="content dropdown-item pointer">
+                              <div class="notification-item">
+                                <h6 class="item-title">{{notification.title}}</h6>
+                                <p class="ow-anywhere">{{notification.message}}</p><br>
+                                <small style="color: blue;">{{notification.dateDiff}}</small>
+                              </div>  
+                          </a>
+                      </div>
+
+                    </div>
+                      
+                  </ul>
+              </li>
+            
+            <!-- Finish Notification -->
+
+            <!-- Logout Button -->
+            <li class="nav-item">
+              <a (click)=logOut()  title="LogOut" class="nav-link" href="#">
+                <i class="fas fa-sign-out-alt"></i>
+              </a>
+            </li>
+            <!-- Finish LogOut -->
+
+          </ul>
+        </div>
+    </div>
+</nav>
+
+

@@ -1,0 +1,90 @@
+<div class="panel-header panel-header-sm" >
+  </div>
+  
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Time Slot Setting</h4>
+              <a (click)=addTimeSlot()><button type="button" class="btn btn-success" title="Add New TimeSlot"><i class="fas fa-plus"></i></button></a>
+          </div>
+          <div class="card-body">
+
+            <!-- Add new timeslot -->
+            <div *ngIf="isAddTimeSlot" class="card">
+                <div class="card-header">
+                    <button (click)=closeAddTimeSlot() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+                </div>
+                <div class="card-body">
+                  <div class="col-sm-6 col-lg-4">
+                      <div class="form-group">
+                          <label>From:</label>
+                          <input type="time"  class="form-control"  name="from"  [(ngModel)]="newTimeSlot.startTime"/>
+                          <small *ngIf="errorFromNew" class="text-danger">{{errorFromNew}}</small>
+                      </div>
+                      <div class="form-group">
+                          <label>To:</label>
+                          <input type="time"  class="form-control"  name="to"  [(ngModel)]="newTimeSlot.finishTime"/>
+                          <small *ngIf="errorToNew" class="text-danger">{{errorToNew}}</small>
+                      </div>
+                    </div>
+                    <button  (click)="saveConfirm()" type="button" class="btn btn-secondary btn-round">Save</button>
+                  </div>
+            </div>
+            <!-- add new time slot finish -->
+           
+              <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>From</th>
+                      <th>TO</th>
+                      <th>Option</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let timeSlot of timeSlotListData">
+                        <td>{{timeSlot.startTime | slice:0:5}}</td>
+                        <td>{{timeSlot.finishTime   | slice:0:5}}</td>
+                        <td>
+                            <a  (click)=isUpdate(timeSlot)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Time Slot"></i></button></a>
+                            <a  (click)=delete(timeSlot)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Time Slot"></i></button></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+
+            <!-- Update -->
+            <div *ngIf="isUpdateVariable" class="card">
+                <div class="card-header">
+                    <button (click)=close() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+                </div>
+                <div class="card-body">
+                  <div class="col-sm-6 col-lg-4">
+                      <div class="form-group">
+                          <label>From:</label>
+                          <input type="time"  class="form-control"  name="from"  [(ngModel)]="updateTimeSlot.startTime"/>
+                          <small *ngIf="errorFrom" class="text-danger">{{errorFrom}}</small>
+                      </div>
+                      <div class="form-group">
+                          <label>To:</label>
+                          <input type="time"  class="form-control"  name="to"  [(ngModel)]="updateTimeSlot.finishTime"/>
+                          <small *ngIf="errorTo" class="text-danger">{{errorTo}}</small>
+                      </div>
+                    </div>
+                    <button  (click)="updateConfirm()" type="button" class="btn btn-secondary btn-round">Update</button>
+                  </div>
+            </div>
+            <!-- Update -->
+
+           
+  
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="panel-header panel-header-sm" >
+</div>
+  
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">{{studentData.name}}'s Details</h4>
+          </div>
+          <div class="card-body">
+           
+            <div class="table-responsive">
+              <table class="table">
+                <!-- <thead class=" text-primary">
+                  <th>Name</th>
+                  <th>Course</th>
+                  <th>Option</th>
+                </thead> -->
+                <tbody>
+                  <tr>
+                    <th>Name:</th>
+                    <td>{{studentData.name}}</td>
+                  </tr>
+                  <tr>
+                     <th>Address:</th>
+                     <td>{{studentData.address}}</td>
+                  </tr>
+                  <tr>
+                     <th>Telephone:</th>
+                     <td>{{studentData.tel}}</td>
+                  </tr>
+                  <tr>
+                     <th>NIC:</th>
+                     <td>{{studentData.nic}}</td>
+                  </tr>
+                  <tr>
+                      <th>Email:</th>
+                      <td>{{studentData.userId.email}}</td>
+                      <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Email"></i></button></a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <th>Password</th>
+                      <td>........</td>
+                      <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Password"></i></button></a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  
+                  <tr>
+                      <th>ExamDate:</th>
+                      <td>{{studentData.examDate}}</td>
+                      <td><a  (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Exam Date"></i></button></a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <th>Trial Date</th>
+                      <td>{{studentData.trialDate}}</td>
+                      <td><a  (click)=isUpdate(4)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Trial Date"></i></button></a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> 
+            
+            <!-- Update -->
+            <div *ngIf="isUpdateVariable" class="card">
+                <div class="card-header">
+                    <button (click)=close() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+                </div>
+                <div class="card-body">
+                  <div class="col-sm-8 col-lg-6">
+                      <div class="form-group">
+                          <label>{{updateName}}:</label>
+                          <input type="text" value="" placeholder="{{placeHolder}}" class="form-control" name="password" [(ngModel)]="updateVariable"/>
+                          <small *ngIf="errorUpdateMessage && isUpdate" class="text-danger">{{errorUpdateMessage}}</small>
+                      </div>
+                    </div>
+                    <button  (click)="update()" type="button" class="btn btn-secondary btn-round">Update</button>
+                  </div>
+            </div>
+            <!-- Update -->
+
+            <!-- Confirm All update -->
+            <button *ngIf="confirmUpdate"  (click)="saveUpdate()" type="button" class="btn btn-primary  btn-round">Confirm All Updates</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

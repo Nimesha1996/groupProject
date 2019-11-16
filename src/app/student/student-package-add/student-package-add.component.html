@@ -1,0 +1,132 @@
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+
+   
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Add Package</h4>
+        </div>
+        <div class="card-body">
+           
+         <!-- package details -->
+          <!-- Drop down -->
+          <div ngbDropdown class="dropdown" placement="bottom-left">
+            <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select the package</button>
+            <div ngbDropdownMenu>
+                <div *ngFor="let package of packages">
+                  <a (click)="packageTransmission(package.packageId)" class="dropdown-item" >{{package.title}}</a>
+                </div>
+            </div>
+          </div>
+          <!-- Drop Down Finish -->
+         <!-- End Package Details -->
+
+            <!-- Transmission Type -->
+            <div *ngIf="isSelectPackageHasTransmission" class="card">
+                <div class="card-header">
+                    <button (click)=close() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                      <h4 class="card-title">{{selectPackage.title}} Package</h4>
+                </div>
+
+                <!-- Both Transmission -->
+                <div *ngIf="isBothLesson" class="card-body"> 
+                    <p>Select the Transmission Type</p>
+                    <!-- Radio Button for transmission -->
+                    <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                            <input (click)="selectTransmission(1)" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" checked>
+                            Manual
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
+                    <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                            <input (click)="selectTransmission(2)" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2">
+                            Auto
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
+                    <!-- End Radio Button for transmission -->
+                    <button  (click)="confirmPackageAdd(1)" type="button" class="btn btn-secondary btn-round">Confirm Add</button>
+                </div>
+                 <!-- Both Transmission -->
+
+                 <!-- Manual Transmission -->
+                 <div *ngIf="isManualLesson" class="card-body"> 
+                    <p>Transmission Type</p>
+                    <!-- Radio Button for transmission -->
+                    <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" checked>
+                            Manual
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
+                    <!-- End Radio Button for transmission -->
+                    <button  (click)="confirmPackageAdd(2)" type="button" class="btn btn-secondary btn-round">Confirm Add</button>
+                </div>
+                  <!-- End Manual Lesson  -->
+
+                 <!-- Auto Transmission -->
+                 <div *ngIf="isAutoLesson" class="card-body"> 
+                    <p>Transmission Type</p>
+                    <!-- Radio Button for transmission -->
+                    <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="2" checked>
+                            Auto
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
+                    <!-- End Radio Button for transmission -->
+                    <button  (click)="confirmPackageAdd(3)" type="button" class="btn btn-secondary btn-round">Confirm Add</button>
+                </div>
+                  <!-- End Auto Lesson  -->
+
+
+            </div>
+            <!-- End Transmission Type -->
+
+       
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Student Follwing Packages</h4>
+          </div>
+        <div class="card-body">
+         
+            <div class="table-responsive">
+                <table class="table">
+                  <thead class=" text-primary">
+                    <th>Package</th>
+                    <th>Option</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let studentPackage of studentPackages">
+                      <td>{{studentPackage.title}}</td>
+                      <td> 
+                        <a><button (click)="deletePackage(studentPackage.packageId,studentPackage.title)"  class="btn btn-danger btn-sm"><i class="fas fa-trash" title="Delete Package"></i></button></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+             </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

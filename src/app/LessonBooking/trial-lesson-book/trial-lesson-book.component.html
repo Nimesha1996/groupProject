@@ -1,0 +1,110 @@
+<div class="panel-header panel-header-sm">
+</div>
+
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Reserve(Trial) Lesson</h4>
+        </div>
+        <div class="card-body">
+          
+          <div class="row">
+            
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <div class="card">
+                  <div class="card-header">
+                    <p class="card-title">Lesson Booking Form</p>
+                  </div>
+                  <div class="card-body">
+
+                    <!-- Message -->
+                    <div *ngIf="errorMessage"class="alert alert-danger">
+                        <button (click)="closeMsg()" type="button" aria-hidden="true" class="close">
+                          <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </button>
+                        <span>{{errorMessage}}</span>
+                    </div>
+                    <!-- Message Finish -->
+
+                    <!-- Select Package -->
+                      <div class="col-sm-12 col-lg-12">
+                          <div>
+                              <label for="sel1">Select Package:</label>
+                              <select class="form-control" name="studentPackage" [(ngModel)]="selectStudentPackage" [attr.disabled] = " !isAbleToBook ? 'disabled' : null">
+                                <option [ngValue]="undefined" selected disabled>Select a Package</option>
+                                <ng-container *ngFor="let package of studentPackageList">
+                                  <option (click)="getLesson()" *ngIf="package.transmission==1" [ngValue]="package" >{{package.packageId.title}}(Manual)</option>
+                                  <option (click)="getLesson()" *ngIf="package.transmission==2" [ngValue]="package" >{{package.packageId.title}}(Auto)</option>
+                                </ng-container>
+                              </select>
+                              <small *ngIf="errorSelectDay" class="text-danger">{{errorSelectDay}}</small>
+                          </div>
+                       </div>
+                     <!--Finish Select Package -->
+
+                   
+
+                       <!--Select Date  -->
+                      <div class="col-sm-8 col-lg-6">
+                          <div class="form-group">
+                            <label>Date:</label>
+                            <!-- There is bug of date selection -->
+                            <input (blur)="getLesson()" [(ngModel)]="selectDay" type="date" class="form-control" placeholder="Select Day" name="trialDate" [attr.disabled] = " !isAbleToBook ? 'disabled' : null">
+                          </div>
+                        </div>
+                      <!-- Finish Select Date -->
+
+                       <!-- Time Slot selection -->
+                       <div class="col-sm-8 col-lg-6">
+                          <div>
+                              
+                                <label for="sel1">Time Slot:</label>
+                                <select  class="form-control" [(ngModel)]="selectTimeSlot" name="selectTimeSlot" [attr.disabled] = " !isAbleToBook ? 'disabled' : null">
+                                  <option [ngValue]="undefined" selected disabled>Select a Time Slot</option>
+                                  <option (click)="getLesson()"  *ngFor="let timeSlot of timeSlotList"  [ngValue]="timeSlot" >{{timeSlot.startTime | slice:0:5}} - {{timeSlot.finishTime | slice:0:5}}</option>
+                                </select>
+                                <small *ngIf="errorSelectTimeSlot" class="text-danger">{{errorSelectTimeSlot}}</small>
+                            
+                          </div>
+                       </div>
+                       <!-- Finish Time Slot Selection -->
+                  </div>
+                </div>
+
+                 <!-- Booking Details -->
+                 <div *ngIf="isAvailableLesson" class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Booking Details</h4>
+                  </div>
+                  <div class="card-body">
+                    <pre>Package Name: <b>{{availableLesson.packageId.title}}</b></pre>
+                    <pre>Day         : <b>{{selectDay}}</b></pre>
+                    <pre>TimeSlot    : <b>{{selectTimeSlot.startTime  | slice:0:5}} - {{selectTimeSlot.finishTime  | slice:0:5}}</b><br><br></pre>
+
+                    <pre *ngIf="availableLesson.transmission==1">Vehicle     : <b>{{availableLesson.packageId.vehicleCategoryId.category}}(Manual)</b></pre>
+                    <pre *ngIf="availableLesson.transmission==2">Vehicle     : <b>{{availableLesson.packageId.vehicleCategoryId.category}}(Auto)</b></pre>
+
+                    <pre>Instructor  : <b>{{availableLesson.instructorId.staffId.name}}</b></pre>
+                    <pre>Map         : <b>{{availableLesson.pathId.origin}} - {{availableLesson.pathId.destination}} (<a  (click)=googleMap(availableLesson.pathId,1)><button class="btn btn-info btn-sm"> <i class="fas fa-map" title="Google Map"></i></button></a>) </b></pre>
+                    <button (click)="saveBooking()" type="button" class="btn btn-primary btn-round">Confirm Booking</button>
+                  </div>
+                 </div>
+                 <!-- Booking Details -->
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

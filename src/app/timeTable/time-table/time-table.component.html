@@ -1,0 +1,195 @@
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+  
+    <!-- Message -->
+    <div *ngIf="errorMsg != ''"class="alert alert-danger">
+        <button (click)="closeMsg(1)" type="button" aria-hidden="true" class="close">
+          <i class="now-ui-icons ui-1_simple-remove"></i>
+        </button>
+        <span *ngIf="errorMsg">{{errorMsg}}</span>
+    </div>
+
+    <div *ngIf="successMsg != ''" class="alert alert-success">
+        <button (click)="closeMsg(2)" type="button" aria-hidden="true" class="close">
+          <i class="now-ui-icons ui-1_simple-remove"></i>
+        </button>
+        <span *ngIf="successMsg">{{successMsg}}</span>
+    </div>
+    <!-- End Message -->
+
+   <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Time Table</h4>
+            <a *ngIf="userRole != 5" (click)=packageAnalysis()><button type="button" class="btn btn-secondary" title="Package Analysis"><i class="fas fa-chart-bar"></i></button></a>
+            <a *ngIf="userRole != 5" (click)=addLesson()><button type="button" class="btn btn-success" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
+            <a *ngIf="userRole != 5" (click)=activateLesson()><button type="button" class="btn btn-info" title="Active Lesson"><i class="fas fa-check-circle"></i></button></a>
+            <a *ngIf="userRole == 5" (click)="trialLessonBook()"><button type="button" class="btn btn-primary btn-round">Reserve Lesson</button></a>
+        </div>
+        <div class="card-body">
+         
+          <div class="card">
+            <div class="card-body">
+              
+              <!-- Table Start -->
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                  <thead class=" text-primary thead-dark">
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Package</th>
+                    <th>Instructor</th>
+                    <th>Path</th>
+                    <th>NumStu</th>
+                    <th *ngIf="userRole != 5">Option</th>
+                  </thead>
+                  <tbody>
+                    
+                    <ng-container *ngFor="let data of timeTableList; let y= index;">
+                        
+                      <tr>
+                            <td [attr.rowspan]="rowSpanLength[y]">{{data.day}}</td>
+                            <td [attr.rowspan]="data.packageData[0].length">{{data.timeSlotData[0]}}</td>
+                            <td>{{data.packageData[0][0]}}</td>
+                            <td>{{data.instructorData[0][0]}}</td>
+                            <td>{{data.pathData[0][0]}}</td>
+
+                            <td *ngIf="data.numStuData[0][0] != 0">{{data.numStuData[0][0]}}</td>
+                            <td *ngIf="data.numStuData[0][0] == 0">-</td>
+
+                            <td *ngIf="data.numStuData[0][0] != 0 && userRole!=5">
+                                <button (click)="lessonUpdate(data.idData[0][0])" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                <button (click)="lessonDeactivate(data.idData[0][0])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>
+                                <button (click)="lessonDelete(data.idData[0][0])" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                            </td>
+                            <td *ngIf="data.numStuData[0][0] == 0 && userRole!=5">-</td>
+                        </tr>
+
+                        <ng-container *ngFor="let time of data.timeSlotData; let i= index;">
+                           
+                              <tr *ngIf="i!=0">
+                                    <td [attr.rowspan]="data.packageData[i].length">{{data.timeSlotData[i]}}</td>
+                                    <td>{{data.packageData[i][0]}}</td>
+                                    <td>{{data.instructorData[i][0]}}</td>
+                                    <td>{{data.pathData[i][0]}}</td>
+                                    <td>{{data.numStuData[i][0]}}</td>
+                                    <td *ngIf="userRole != 5">
+                                      <button (click)="lessonUpdate(data.idData[i][0])" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                      <button (click)="lessonDeactivate(data.idData[i][0])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>
+                                      <button (click)="lessonDelete(data.idData[i][0])" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    </td>
+                              </tr>
+
+                              <ng-container *ngFor="let data2 of data.packageData; let k = index;">
+                                  <ng-container *ngFor="let data3 of data2; let j=index;">
+                                      <tr *ngIf="k==i && j!=0">
+                                          <td>{{data.packageData[i][j]}}</td>
+                                          <td>{{data.instructorData[i][j]}}</td>
+                                          <td>{{data.pathData[i][j]}}</td>
+                                          <td>{{data.numStuData[i][j]}}</td>
+                                          <td *ngIf="userRole != 5">
+                                            <button (click)="lessonUpdate(data.idData[i][j])" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                            <button (click)="lessonDeactivate(data.idData[i][j])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>
+                                            <button (click)="lessonDelete(data.idData[i][j])" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                          </td>
+                                      </tr>
+                                  </ng-container>
+                              </ng-container>
+                        </ng-container>
+                    </ng-container>
+                  </tbody>
+                  </table>
+               </div>
+              <!-- Table Finish -->
+
+
+              <!-- Deactivate Lesson -->
+               <div *ngIf="isDeactiveLesson" class="card">
+                  <div class="card-header">
+                      <div class="card-header">
+                          <button (click)=close() type="button" aria-hidden="true" class="close">
+                              <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </button>
+                      </div>
+                      <h4 class="card-titlt">Deactivate Lessons</h4>
+                  </div>
+                  <div class="card-body">
+                        <!-- Table Start -->
+                              <div class="table-responsive">
+                                  <table class="table table-striped table-bordered">
+                                    <thead class=" text-primary thead-dark">
+                                      <th>Day</th>
+                                      <th>Time</th>
+                                      <th>Package</th>
+                                      <th>Instructor</th>
+                                      <th>Path</th>
+                                      <th>NumStu</th>
+                                      <th>Option</th>
+                                    </thead>
+                                    <tbody id="mytable">
+                                      
+                                      <ng-container *ngFor="let data of deactivateLessonList; let y= index;">
+                                          
+                                        <tr>
+                                              <td [attr.rowspan]="deacivateRowSpanLength[y]">{{data.day}}</td>
+                                              <td [attr.rowspan]="data.packageData[0].length">{{data.timeSlotData[0]}}</td>
+                                              <td>{{data.packageData[0][0]}}</td>
+                                              <td>{{data.instructorData[0][0]}}</td>
+                                              <td>{{data.pathData[0][0]}}</td>
+                  
+                                              <td *ngIf="data.numStuData[0][0] != 0">{{data.numStuData[0][0]}}</td>
+                                              <td *ngIf="data.numStuData[0][0] == 0">-</td>
+                  
+                                              <td *ngIf="data.numStuData[0][0] != 0">   
+                                                  <button (click)="lessonActivate(data.idData[0][0])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>
+                                              </td>
+                                              <td *ngIf="data.numStuData[0][0] == 0">-</td>
+                                          </tr>
+                  
+                                          <ng-container *ngFor="let time of data.timeSlotData; let i= index;">
+                                            
+                                                <tr *ngIf="i!=0">
+                                                      <td [attr.rowspan]="data.packageData[i].length">{{data.timeSlotData[i]}}</td>
+                                                      <td>{{data.packageData[i][0]}}</td>
+                                                      <td>{{data.instructorData[i][0]}}</td>
+                                                      <td>{{data.pathData[i][0]}}</td>
+                                                      <td>{{data.numStuData[i][0]}}</td>
+                                                      <td>                                                       
+                                                        <button (click)="lessonActivate(data.idData[i][0])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>
+                                                      </td>
+                                                </tr>
+                  
+                                                <ng-container *ngFor="let data2 of data.packageData; let k = index;">
+                                                    <ng-container *ngFor="let data3 of data2; let j=index;">
+                                                        <tr *ngIf="k==i && j!=0">
+                                                            <td>{{data.packageData[i][j]}}</td>
+                                                            <td>{{data.instructorData[i][j]}}</td>
+                                                            <td>{{data.pathData[i][j]}}</td>
+                                                            <td>{{data.numStuData[i][j]}}</td>
+                                                            <td>                                    
+                                                              <button (click)="lessonActivate(data.idData[i][j])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>                                               
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                          </ng-container>
+                                      </ng-container>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            <!-- Table Finish -->
+                  </div>
+               </div>
+               <!-- Deactivate Lesson -->
+              
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
